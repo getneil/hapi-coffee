@@ -1,0 +1,17 @@
+{
+  "name": "gulp-boilerplate",
+  "version": "0.1.0",
+  "description": "a starting point for using gulp",
+  "devDependencies": {
+    "gulp": "latest",
+    "gulp-coffee": "latest",
+    "gulp-jade": "latest",
+    "gulp-nodemon": "^1.0.4",
+    "gulp-sass": "latest",
+    "gulp-util": "latest"
+  },
+  "dependencies": {
+    "good": "^2.3.0",
+    "hapi": "^6.9.0"
+  }
+}
