@@ -5,13 +5,15 @@
   "devDependencies": {
     "gulp": "latest",
     "gulp-coffee": "latest",
+    "gulp-copy": "latest",
     "gulp-jade": "latest",
-    "gulp-nodemon": "^1.0.4",
+    "gulp-nodemon": "latest",
     "gulp-sass": "latest",
     "gulp-util": "latest"
   },
   "dependencies": {
     "good": "^2.3.0",
-    "hapi": "^6.9.0"
+    "hapi": "^6.9.0",
+    "jade": "^1.7.0"
   }
 }

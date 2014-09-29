@@ -4,14 +4,15 @@ gutil  = require 'gulp-util'
 sass = require 'gulp-sass'
 coffee = require 'gulp-coffee'
 nodemon = require 'gulp-nodemon'
+copy = require "gulp-copy"
+
 app = null
 sources =
-	jade: "src/**/*.jade"
+	jade: "src/assets/templates/*.jade"
+	views: "src/views/**/*.jade"
 	coffee: "src/**/*.coffee"
 	sass: "src/**/*.scss"
 	overwatch: "src/**/*.{js,html,css}"
-
-
 
 
 gulp.task "jade", (event) ->
@@ -31,12 +32,18 @@ gulp.task "sass", (event) ->
 		base:"./src"
 	.pipe(sass(style: "compressed"))
 	.pipe gulp.dest("./app")
-
+gulp.task "copy",->
+	gulp.src sources.views,
+		base:"./src"
+	.pipe gulp.dest("./app")
 gulp.task "watch", ->
 	gulp.watch sources.jade, ["jade"]
 	gulp.watch sources.sass, ["sass"]
 	gulp.watch sources.coffee, ["coffee"]
+	gulp.watch sources.views, ["copy"]
 	return
+
+
 
 gulp.task "develop", ->
 	nodemon 
@@ -50,6 +57,7 @@ gulp.task "default", [
 	"jade"
 	"coffee"
 	"sass"
+	"copy"
 	"develop"
 	"watch"
 ]

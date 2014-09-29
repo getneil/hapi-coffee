@@ -1,13 +1,9 @@
-Hapi = require("hapi")
-Good = require("good")
+Hapi = require "hapi"
+Good = require "good"
 Path = require "path"
-serverOptions =
-  views:
-    path:"./app/views"
-    engines:
-      html:""
+config = require "./config/settings"
 
-server = new Hapi.Server(3000)
+server = new Hapi.Server config.port,config.hapi.options
 
 initialize = (cb)->
 
