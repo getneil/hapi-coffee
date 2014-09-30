@@ -1,0 +1,31 @@
+{
+  "name": "hapi-coffee",
+  "version": "0.0.0",
+  "homepage": "https://github.com/getneil/hapi-coffee",
+  "authors": [
+    "neil paul molina <get.neilmolina@gmail.com>"
+  ],
+  "description": "hapi.js running in coffeescript + jade + angular",
+  "main": "app/app.js",
+  "keywords": [
+    "angular",
+    "node",
+    "sass",
+    "coffee-script",
+    "jade"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "latest",
+    "angular-resource":"latest",
+    "angular-route":"latest",
+    "foundation":"5.4.5"
+  }
+}
