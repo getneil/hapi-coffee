@@ -7,6 +7,6 @@ module.exports =
 	hapi:
 		options:
 			views:
-				path:"./app/views"
+				path: "./app/views"
 				engines:
-					html: require "jade"
+					jade: require "jade"
