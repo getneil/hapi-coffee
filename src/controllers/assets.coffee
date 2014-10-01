@@ -18,8 +18,8 @@ module.exports =
   css:
     handler:
       directory:
-        path: "assets/style"
-
+        path: "./app/assets/styles"
+        listing: true
     app:
       name: "css"
 

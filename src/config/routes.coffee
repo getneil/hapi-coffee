@@ -8,10 +8,7 @@ module.exports = [
   }
   {
     method: 'GET'
-    path: '/assets/{param*}'
-    handler: 
-      directory:
-        path: './assets/'
-        listing: true
+    path: '/css/{path*}'
+    config: controller.assets.css
   }
 ]
