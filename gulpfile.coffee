@@ -1,11 +1,12 @@
-gulp = require 'gulp'
-jade = require 'gulp-jade'
-gutil  = require 'gulp-util'
-sass = require 'gulp-sass'
-coffee = require 'gulp-coffee'
-nodemon = require 'gulp-nodemon'
-copy = require "gulp-copy"
+gulp       = require 'gulp'
+jade       = require 'gulp-jade'
+gutil      = require 'gulp-util'
+sass       = require 'gulp-sass'
+coffee     = require 'gulp-coffee'
+nodemon    = require 'gulp-nodemon'
+copy       = require "gulp-copy"
 livereload = require 'gulp-livereload'
+inject     = require 'gulp-inject'
 
 app = null
 sources =
@@ -13,8 +14,16 @@ sources =
 	views: "src/views/**/*.jade"
 	coffee: "src/**/*.coffee"
 	sass: "src/**/*.scss"
-	overwatch: "src/**/*.{js,html,css}"
-
+	overwatch: "src/**/*.{css,js,html}"
+	cssToInject: [
+		'./app/assets/styles/*.css'
+		'./app/assets/libs/foundation/**/*.css'
+	]
+	jsToInject: [
+		'./app/assets/libs/angular/**/*.min.js'
+		'./app/assets/libs/angular-route/**/*.min.js'		
+		'./app/assets/libs/angular-resource/**/*.min.js'		
+	]
 
 gulp.task "jade", (event) ->
 	gulp.src [sources.jade],
@@ -42,11 +51,33 @@ gulp.task "copy",->
 	.pipe gulp.dest("./app")
 	.pipe livereload()
 
+gulp.task 'cssinject', ->
+	gulp.src ['app/views/layout/styles.jade'],
+		base: './app'
+	.pipe(inject(gulp.src(sources.cssToInject),
+		read: false
+		starttag: '//- inject:css'
+		endtag: '//- endinject'
+	))
+	.pipe gulp.dest './app'
+
+gulp.task 'jsinject', ->
+	gulp.src ['app/views/layout/scripts.jade'],
+		base: './app'
+	.pipe(inject(gulp.src(sources.jsToInject),
+		read: false
+		starttag: '//- inject:js'
+		endtag: '//- endinject'
+	))
+	.pipe gulp.dest './app'
+
 gulp.task "watch", ->
 	gulp.watch sources.jade, ["jade"]
 	gulp.watch sources.sass, ["sass"]
 	gulp.watch sources.coffee, ["coffee"]
 	gulp.watch sources.views, ["copy"]
+	gulp.watch sources.jsToInject, ['jsinject']
+	gulp.watch sources.cssToInject, ['cssinject']
 	return
 
 gulp.task "develop", ->
@@ -62,6 +93,8 @@ gulp.task "default", [
 	"coffee"
 	"sass"
 	"copy"
+	# "cssinject"
+	"jsinject"
 	"develop"
 	"watch"
 ]
