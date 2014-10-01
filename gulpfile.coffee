@@ -21,6 +21,7 @@ gulp.task "jade", (event) ->
 		base:"./src"
 	.pipe(jade(pretty: true))
 	.pipe gulp.dest("./app")
+	.pipe livereload()
 
 gulp.task 'coffee', (event) ->
 	gulp.src [sources.coffee],
@@ -33,14 +34,15 @@ gulp.task "sass", (event) ->
 		base:"./src"
 	.pipe(sass(style: "compressed"))
 	.pipe gulp.dest("./app")
+	.pipe livereload()
 
 gulp.task "copy",->
 	gulp.src sources.views,
 		base:"./src"
 	.pipe gulp.dest("./app")
+	.pipe livereload()
 
 gulp.task "watch", ->
-	livereload.listen()
 	gulp.watch sources.jade, ["jade"]
 	gulp.watch sources.sass, ["sass"]
 	gulp.watch sources.coffee, ["coffee"]
