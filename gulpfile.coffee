@@ -5,6 +5,7 @@ sass = require 'gulp-sass'
 coffee = require 'gulp-coffee'
 nodemon = require 'gulp-nodemon'
 copy = require "gulp-copy"
+livereload = require 'gulp-livereload'
 
 app = null
 sources =
@@ -32,24 +33,25 @@ gulp.task "sass", (event) ->
 		base:"./src"
 	.pipe(sass(style: "compressed"))
 	.pipe gulp.dest("./app")
+
 gulp.task "copy",->
 	gulp.src sources.views,
 		base:"./src"
 	.pipe gulp.dest("./app")
+
 gulp.task "watch", ->
+	livereload.listen()
 	gulp.watch sources.jade, ["jade"]
 	gulp.watch sources.sass, ["sass"]
 	gulp.watch sources.coffee, ["coffee"]
 	gulp.watch sources.views, ["copy"]
 	return
 
-
-
 gulp.task "develop", ->
 	nodemon 
 		script:"app/app.js"
-		ext:"html js"
-		ignore:["./app/assets/**","./app/views/**"]
+		ext:"jade html js"
+		ignore:["./app/assets/**"]
 	.on "restart", ->
 		console.log "RESTARTED!"
 
