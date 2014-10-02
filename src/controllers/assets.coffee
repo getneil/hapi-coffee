@@ -18,7 +18,7 @@ module.exports =
   css:
     handler:
       directory:
-        path: "./app/assets/styles"
+        path: "./app/assets"
         listing: true
     app:
       name: "css"
@@ -26,8 +26,7 @@ module.exports =
   js:
     handler:
       directory:
-        path: "assets/js"
-
+        path: "./app/assets"
     app:
       name: "js"
 

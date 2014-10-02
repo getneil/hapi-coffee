@@ -11,4 +11,9 @@ module.exports = [
     path: '/css/{path*}'
     config: controller.assets.css
   }
+  {
+    method: 'GET'
+    path: '/js/{path*}'
+    config: controller.assets.js
+  }
 ]

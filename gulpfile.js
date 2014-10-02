@@ -61,23 +61,27 @@
   });
 
   gulp.task('cssinject', function() {
-    return gulp.src(['app/views/layout/styles.jade'], {
-      base: './app'
+    return gulp.src(['src/views/layout/styles.jade'], {
+      base: './src'
     }).pipe(inject(gulp.src(sources.cssToInject), {
+      ignorePath: 'app/assets',
+      addPrefix: 'css',
       read: false,
       starttag: '//- inject:css',
       endtag: '//- endinject'
-    })).pipe(gulp.dest('./app'));
+    })).pipe(gulp.dest('./src'));
   });
 
   gulp.task('jsinject', function() {
-    return gulp.src(['app/views/layout/scripts.jade'], {
-      base: './app'
+    return gulp.src(['src/views/layout/scripts.jade'], {
+      base: './src'
     }).pipe(inject(gulp.src(sources.jsToInject), {
+      ignorePath: 'app/assets',
+      addPrefix: 'js',
       read: false,
       starttag: '//- inject:js',
       endtag: '//- endinject'
-    })).pipe(gulp.dest('./app'));
+    })).pipe(gulp.dest('./src'));
   });
 
   gulp.task("watch", function() {
@@ -85,8 +89,6 @@
     gulp.watch(sources.sass, ["sass"]);
     gulp.watch(sources.coffee, ["coffee"]);
     gulp.watch(sources.views, ["copy"]);
-    gulp.watch(sources.jsToInject, ['jsinject']);
-    gulp.watch(sources.cssToInject, ['cssinject']);
   });
 
   gulp.task("develop", function() {
@@ -99,6 +101,6 @@
     });
   });
 
-  gulp.task("default", ["jade", "coffee", "sass", "copy", "jsinject", "develop", "watch"]);
+  gulp.task("default", ["jade", "coffee", "sass", "copy", "cssinject", "jsinject", "develop", "watch"]);
 
 }).call(this);

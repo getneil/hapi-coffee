@@ -52,32 +52,34 @@ gulp.task "copy",->
 	.pipe livereload()
 
 gulp.task 'cssinject', ->
-	gulp.src ['app/views/layout/styles.jade'],
-		base: './app'
+	gulp.src ['src/views/layout/styles.jade'],
+		base: './src'
 	.pipe(inject(gulp.src(sources.cssToInject),
+		ignorePath: 'app/assets'
+		addPrefix: 'css'
 		read: false
 		starttag: '//- inject:css'
 		endtag: '//- endinject'
 	))
-	.pipe gulp.dest './app'
+	.pipe gulp.dest './src'
 
 gulp.task 'jsinject', ->
-	gulp.src ['app/views/layout/scripts.jade'],
-		base: './app'
+	gulp.src ['src/views/layout/scripts.jade'],
+		base: './src'
 	.pipe(inject(gulp.src(sources.jsToInject),
+		ignorePath: 'app/assets'
+		addPrefix: 'js'
 		read: false
 		starttag: '//- inject:js'
 		endtag: '//- endinject'
 	))
-	.pipe gulp.dest './app'
+	.pipe gulp.dest './src'
 
 gulp.task "watch", ->
 	gulp.watch sources.jade, ["jade"]
 	gulp.watch sources.sass, ["sass"]
 	gulp.watch sources.coffee, ["coffee"]
 	gulp.watch sources.views, ["copy"]
-	gulp.watch sources.jsToInject, ['jsinject']
-	gulp.watch sources.cssToInject, ['cssinject']
 	return
 
 gulp.task "develop", ->
@@ -93,7 +95,7 @@ gulp.task "default", [
 	"coffee"
 	"sass"
 	"copy"
-	# "cssinject"
+	"cssinject"
 	"jsinject"
 	"develop"
 	"watch"
