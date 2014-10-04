@@ -1,11 +1,12 @@
-gulp = require 'gulp'
-jade = require 'gulp-jade'
-gutil  = require 'gulp-util'
-sass = require 'gulp-sass'
-coffee = require 'gulp-coffee'
-nodemon = require 'gulp-nodemon'
-copy = require "gulp-copy"
+gulp       = require 'gulp'
+jade       = require 'gulp-jade'
+gutil      = require 'gulp-util'
+sass       = require 'gulp-sass'
+coffee     = require 'gulp-coffee'
+nodemon    = require 'gulp-nodemon'
+copy       = require "gulp-copy"
 livereload = require 'gulp-livereload'
+inject     = require 'gulp-inject'
 
 app = null
 sources =
@@ -13,8 +14,16 @@ sources =
 	views: "src/views/**/*.jade"
 	coffee: "src/**/*.coffee"
 	sass: "src/**/*.scss"
-	overwatch: "src/**/*.{js,html,css}"
-
+	overwatch: "src/**/*.{css,js,html}"
+	cssToInject: [
+		'./app/assets/styles/*.css'
+		'./app/assets/libs/foundation/**/*.css'
+	]
+	jsToInject: [
+		'./app/assets/libs/angular/**/*.min.js'
+		'./app/assets/libs/angular-route/**/*.min.js'		
+		'./app/assets/libs/angular-resource/**/*.min.js'		
+	]
 
 gulp.task "jade", (event) ->
 	gulp.src [sources.jade],
@@ -42,6 +51,30 @@ gulp.task "copy",->
 	.pipe gulp.dest("./app")
 	.pipe livereload()
 
+gulp.task 'cssinject', ->
+	gulp.src ['src/views/layout/styles.jade'],
+		base: './src'
+	.pipe(inject(gulp.src(sources.cssToInject),
+		ignorePath: 'app/assets'
+		addPrefix: 'css'
+		read: false
+		starttag: '//- inject:css'
+		endtag: '//- endinject'
+	))
+	.pipe gulp.dest './src'
+
+gulp.task 'jsinject', ->
+	gulp.src ['src/views/layout/scripts.jade'],
+		base: './src'
+	.pipe(inject(gulp.src(sources.jsToInject),
+		ignorePath: 'app/assets'
+		addPrefix: 'js'
+		read: false
+		starttag: '//- inject:js'
+		endtag: '//- endinject'
+	))
+	.pipe gulp.dest './src'
+
 gulp.task "watch", ->
 	gulp.watch sources.jade, ["jade"]
 	gulp.watch sources.sass, ["sass"]
@@ -62,6 +95,8 @@ gulp.task "default", [
 	"coffee"
 	"sass"
 	"copy"
+	"cssinject"
+	"jsinject"
 	"develop"
 	"watch"
 ]

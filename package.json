@@ -6,6 +6,7 @@
     "gulp": "latest",
     "gulp-coffee": "latest",
     "gulp-copy": "latest",
+    "gulp-inject": "latest",
     "gulp-jade": "latest",
     "gulp-livereload": "latest",
     "gulp-nodemon": "latest",

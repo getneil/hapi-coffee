@@ -9,7 +9,7 @@ server = new Hapi.Server config.port,config.hapi.options
 options =
   subscribers:
     'console': ['request', 'log', 'error']
-    './logs/log': ['request', 'error', 'log']
+    './logs/log': ['request', 'error']
 
 initialize = (cb)->
 
